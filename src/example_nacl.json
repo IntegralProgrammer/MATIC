@@ -1,0 +1,184 @@
+{
+	"input_nodes" : {
+		"CryptoTest" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "GiveMessage", "port" : "default"}, {"name" : "GiveSecretKey", "port" : "default"}, {"name" : "GivePublicKey", "port" : "default"}, {"name" : "ToggleTamperMessage_A", "port" : "default"}],
+			"outputs" : []
+		},
+		"ToggleErrors" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "ToggleTamperMessage_B", "port" : "default"}],
+			"outputs" : []
+		}
+	},
+	"processing_nodes" : {
+		"GiveMessage" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "Hello World!"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "ConvertMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"GiveSecretKey" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "e08f537c082b13dbcc39de58cd3ab2fc8c2fb2cf599519852f3f42a06e58b826676bbf8053081dca14e589234369855eb9fc0eb66775d7c407a2549914b429b0"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "ConvertSecretKey", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"GivePublicKey" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "676bbf8053081dca14e589234369855eb9fc0eb66775d7c407a2549914b429b0"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "ConvertPublicKey", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertFlipKey" : {
+			"type" : "hex_to_bytes",
+			"init_args" : [],
+			"feedforward" : [{"name" : "XorMessage", "port" : "input_b"}],
+			"outputs" : ["OutA"]
+		},
+		"XorMessage" : {
+			"type" : "xor",
+			"init_args" : [],
+			"feedforward" : [{"name" : "VerifyMessage", "port" : "default"}, {"name" : "OpenMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertSecretKey" : {
+			"type" : "hex_to_bytes",
+			"init_args" : [],
+			"feedforward" : [{"name" : "SignMessage", "port" : "secret_key"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertPublicKey" : {
+			"type" : "hex_to_bytes",
+			"init_args" : [],
+			"feedforward" : [{"name" : "VerifyMessage", "port" : "public_key"}, {"name" : "OpenMessage", "port" : "public_key"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertSignedMessage" : {
+			"type" : "to_string",
+			"init_args" : [],
+			"feedforward" : [{"name" : "XorMessage", "port" : "input_a"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertMessage" : {
+			"type" : "to_string",
+			"init_args" : [],
+			"feedforward" : [{"name" : "SignMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertVerificationStatus" : {
+			"type" : "str_to_hex",
+			"init_args" : [],
+			"feedforward" : [{"name" : "ValidationStatusPrinter", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"SignMessage" : {
+			"type" : "unicorn_nacl_sign",
+			"init_args" : [],
+			"feedforward" : [{"name" : "ConvertSignedMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"VerifyMessage" : {
+			"type" : "unicorn_nacl_verify",
+			"init_args" : [],
+			"feedforward" : [{"name" : "ConvertVerificationStatus", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"OpenMessage" : {
+			"type" : "unicorn_nacl_open",
+			"init_args" : [],
+			"feedforward" : [{"name" : "MessagePrinter", "port" : "default"}],
+			"outputs" : ["OutA"]
+		}
+	},
+	"output_nodes" : {
+		"MessagePrinter" : {
+			"type" : "printer",
+			"init_args" : []
+		},
+		"ValidationStatusPrinter" : {
+			"type" : "printer",
+			"init_args" : []
+		}
+	},
+	"linked_nodes" : {
+		"ToggleTamperMessage_A" : {
+			"type" : "connected_fsm",
+			"init_args" : [
+							{
+								"clean" : {
+									"next_states" : {
+										"1" : "clean"
+									},
+									"output" : "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+								},
+								"errors" : {
+									"next_states" : {
+										"1" : "errors"
+									},
+									"output" : "3600000a00000b000ef000003350000000100000500000000000c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+								}
+							},
+							"clean"
+			],
+			"feedforward" : [{"name" : "ConvertFlipKey", "port" : "default"}],
+			"linked" : ["ToggleTamperMessage_B"],
+			"outputs" : ["OutA"]
+		},
+		"ToggleTamperMessage_B" : {
+			"type" : "connected_fsm",
+			"init_args" : [
+							{
+								"clean" : {
+									"next_states" : {
+										"1" : "errors"
+									},
+									"output" : "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+								},
+								"errors" : {
+									"next_states" : {
+										"1" : "clean"
+									},
+									"output" : "3600000a00000b000ef000003350000000100000500000000000c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+								}
+							},
+							"clean"
+			],
+			"feedforward" : [],
+			"linked" : ["ToggleTamperMessage_A"],
+			"outputs" : ["OutA"]
+		}
+	}
+}

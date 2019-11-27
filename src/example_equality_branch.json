@@ -1,0 +1,104 @@
+{
+	"input_nodes" : {
+		"MyInput" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "FSMone", "port" : "default"}, {"name" : "FSMtwo", "port" : "default"}, {"name" : "Gain1", "port" : "default"}],
+			"outputs": []
+		}
+	},
+	"processing_nodes" : {
+		"FSMone" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_b"
+									},
+									"output" : "A"
+								},
+								"state_b" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "B"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "CompareUse5", "port" : "input_a"}, {"name" : "CompareUse6", "port" : "input_a"}],
+			"outputs" : ["OutA"]
+		},
+		"FSMtwo" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_b"
+									},
+									"output" : "A"
+								},
+								"state_b" : {
+									"next_states" : {
+										"1" : "state_c"
+									},
+									"output" : "B"
+								},
+								"state_c" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "C"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "CompareUse5", "port" : "input_b"}, {"name" : "CompareUse6", "port" : "input_b"}],
+			"outputs" : ["OutA"]
+		},
+		"Gain1" : {
+			"type" : "gain",
+			"init_args" : [1],
+			"feedforward" : [{"name" : "CompareUse5", "port" : "input_c"}, {"name" : "CompareUse6", "port" : "input_c"}],
+			"outputs" : ["OutA"]
+		},
+		"CompareUse5" : {
+			"type" : "equality",
+			"init_args" : [],
+			"feedforward" : [{"name" : "Scale5", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"CompareUse6" : {
+			"type" : "inequality",
+			"init_args" : [],
+			"feedforward" : [{"name" : "Scale6", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"Scale5" : {
+			"type" : "gain",
+			"init_args" : [5],
+			"feedforward" : [{"name" : "MyPrinter5", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"Scale6" : {
+			"type" : "gain",
+			"init_args" : [6],
+			"feedforward" : [{"name" : "MyPrinter6", "port" : "default"}],
+			"outputs" : ["OutA"]
+		}
+	},
+	"output_nodes" : {
+		"MyPrinter5" : {
+			"type" : "printer",
+			"init_args" : []
+		},
+		"MyPrinter6" : {
+			"type" : "printer",
+			"init_args" : []
+		}
+	},
+	"linked_nodes" : {
+	}
+}

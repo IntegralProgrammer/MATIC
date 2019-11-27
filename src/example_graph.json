@@ -1,0 +1,38 @@
+{
+	"input_nodes" : {
+		"InA" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "NodeA", "port" : "default"}],
+			"outputs": []
+		},
+		"InB" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "NodeB", "port" : "default"}],
+			"outputs": []
+		}
+	},
+	"processing_nodes" : {
+		"NodeA" : {
+			"type" : "tagger",
+			"init_args" : ["NodeA"],
+			"feedforward" : [{"name" : "OutA", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"NodeB" : {
+			"type" : "tagger",
+			"init_args" : ["NodeB"],
+			"feedforward" : [{"name" : "NodeA", "port" : "default"}],
+			"outputs" : ["OutB"]
+		}
+	},
+	"output_nodes" : {
+		"OutA" : {
+			"type" : "printer",
+			"init_args" : []
+		}
+	},
+	"linked_nodes" : {
+	}
+}

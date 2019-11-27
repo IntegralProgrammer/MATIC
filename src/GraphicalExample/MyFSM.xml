@@ -1,0 +1,34 @@
+<mxGraphModel>
+  <root>
+    <Diagram label="My Diagram" href="http://www.jgraph.com/" id="0">
+      <mxCell/>
+    </Diagram>
+    <Layer label="Default Layer" id="1">
+      <mxCell parent="0"/>
+    </Layer>
+    <Shape label="StateB:Hello Again" href="" id="2">
+      <mxCell style="ellipse" parent="1" vertex="1">
+        <mxGeometry x="260" y="100" width="130" height="120" as="geometry"/>
+      </mxCell>
+    </Shape>
+    <Shape label="StateA:Hello World" href="" id="3">
+      <mxCell style="doubleEllipse" parent="1" vertex="1">
+        <mxGeometry x="70" y="230" width="140" height="140" as="geometry"/>
+      </mxCell>
+    </Shape>
+    <Connector label="1" href="" id="5">
+      <mxCell style="straightConnector" edge="1" parent="1" source="3" target="2">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+    </Connector>
+    <Connector label="1" href="" id="6">
+      <mxCell style="straightConnector" edge="1" parent="1" source="2" target="3">
+        <mxGeometry relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="350" y="360"/>
+          </Array>
+        </mxGeometry>
+      </mxCell>
+    </Connector>
+  </root>
+</mxGraphModel>

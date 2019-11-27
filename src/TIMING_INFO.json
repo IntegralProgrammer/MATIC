@@ -1,0 +1,19 @@
+{
+	"tagger" : {"fixed" : false, "var" : "TAGGER_VAR"},
+	"printer" : {"fixed" : false, "var" : "PRINTER_VAR"},
+	"gain" : {"fixed" : true, "var" : "GAIN_CONST"},
+	"adder" : {"fixed" : true, "var" : "ADDER_CONST"},
+	"xor" : {"fixed" : true, "var" : "XOR_CONST"},
+	"fsm" : {"fixed" : true, "var" : "FSM_CONST"},
+	"hex_to_bytes" : {"fixed" : false, "var" : "HEX_TO_BYTES_VAR"},
+	"str_to_hex" : {"fixed" : false, "var" : "STR_TO_HEX_VAR"},
+	"to_string" : {"fixed" : false, "var" : "TO_STRING_VAR"},
+	"connected_fsm" : {"fixed" : true, "var" : "CONNECTED_FSM_CONST"},
+	"equality" : {"fixed" : true, "var" : "EQUALITY_CONST"},
+	"inequality" : {"fixed" : true, "var" : "INEQUALITY_CONST"},
+	"unicorn_nacl_sign" : {"fixed" : true, "var" : "UNICORN_NACL_SIGN_CONST"},
+	"unicorn_nacl_verify" : {"fixed" : true, "var" : "UNICORN_NACL_VERIFY_CONST"},
+	"unicorn_nacl_open" : {"fixed" : true, "var" : "UNICORN_NACL_OPEN_CONST"},
+	"unicorn_zlib_deflate" : {"fixed" : true, "var" : "UNICORN_ZLIB_DEFLATE_CONST"},
+	"unicorn_zlib_inflate" : {"fixed" : true, "var" : "UNICORN_ZLIB_INFLATE_CONST"}
+}

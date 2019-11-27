@@ -1,0 +1,38 @@
+{
+	"input_nodes" : {
+		"TriggerCalc" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "Gain5", "port" : "default"}, {"name" : "Gain2", "port" : "default"}],
+			"outputs": []
+		}
+	},
+	"processing_nodes" : {
+		"Gain5" : {
+			"type" : "gain",
+			"init_args" : [5],
+			"feedforward" : [{"name" : "MyAdder", "port" : "input_a"}],
+			"outputs" : []
+		},
+		"Gain2" : {
+			"type" : "gain",
+			"init_args" : [2],
+			"feedforward" : [{"name" : "MyAdder", "port" : "input_b"}],
+			"outputs" : []
+		},
+		"MyAdder" : {
+			"type" : "adder",
+			"init_args" : [],
+			"feedforward" : [{"name" : "OutputPrinter", "port" : "default"}],
+			"outputs" : []
+		}
+	},
+	"output_nodes" : {
+		"OutputPrinter" : {
+			"type" : "printer",
+			"init_args" : []
+		}
+	},
+	"linked_nodes" : {
+	}
+}

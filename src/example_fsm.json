@@ -1,0 +1,64 @@
+{
+	"input_nodes" : {
+		"OneInput" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "MyFSM", "port" : "default"}],
+			"outputs": []
+		},
+		"TwoInput" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "Gain2", "port" : "default"}],
+			"outputs": []
+		}
+	},
+	"processing_nodes" : {
+		"MyFSM" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_b",
+										"2" : "state_c"
+									},
+									"output" : "State is A"
+								},
+								"state_b" : {
+									"next_states" : {
+										"1" : "state_a",
+										"2" : "state_c"
+									},
+									"output" : "State is B"
+								},
+								"state_c" : {
+									"next_states" : {
+										"1" : "state_b",
+										"2" : "state_a"
+									},
+									"output" : "State is C"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "MyPrinter", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"Gain2" : {
+			"type" : "gain",
+			"init_args" : [2],
+			"feedforward" : [{"name" : "MyFSM", "port" : "default"}],
+			"outputs" : ["OutA"]
+		}
+	},
+	"output_nodes" : {
+		"MyPrinter" : {
+			"type" : "printer",
+			"init_args" : [],
+			"properties" : {"default" : ["norepeat"]}
+		}
+	},
+	"linked_nodes" : {
+	}
+}

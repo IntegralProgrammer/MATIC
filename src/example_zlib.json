@@ -1,0 +1,64 @@
+{
+	"input_nodes" : {
+		"DeflateInflate" : {
+			"type" : "enterkey",
+			"init_args" : [],
+			"feedforward" : [{"name" : "GiveMessage", "port" : "default"}],
+			"outputs" : []
+		}
+	},
+	"processing_nodes" : {
+		"GiveMessage" : {
+			"type" : "fsm",
+			"init_args" : [
+							{
+								"state_a" : {
+									"next_states" : {
+										"1" : "state_a"
+									},
+									"output" : "Hello World!"
+								}
+						},
+						"state_a"
+			],
+			"feedforward" : [{"name" : "ConvertMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertMessage" : {
+			"type" : "to_string",
+			"init_args" : [],
+			"feedforward" : [{"name" : "CompressMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"CompressMessage" : {
+			"type" : "unicorn_zlib_deflate",
+			"init_args" : [],
+			"feedforward" : [{"name" : "UncompressMessage", "port" : "default"}, {"name" : "ConvertCompressedMessage", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"UncompressMessage" : {
+			"type" : "unicorn_zlib_inflate",
+			"init_args" : [],
+			"feedforward" : [{"name" : "ReconstructedMessagePrinter", "port" : "default"}],
+			"outputs" : ["OutA"]
+		},
+		"ConvertCompressedMessage" : {
+			"type" : "str_to_hex",
+			"init_args" : [],
+			"feedforward" : [{"name" : "CompressedMessagePrinter", "port" : "default"}],
+			"outputs" : ["OutA"]
+		}
+	},
+	"output_nodes" : {
+		"ReconstructedMessagePrinter" : {
+			"type" : "printer",
+			"init_args" : []
+		},
+		"CompressedMessagePrinter" : {
+			"type" : "printer",
+			"init_args" : []
+		}
+	},
+	"linked_nodes" : {
+	}
+}
